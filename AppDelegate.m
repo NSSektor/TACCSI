@@ -12,7 +12,6 @@
 
 #import "PayPalMobile.h"
 
-//sdfjdklfjdslkf
 
 #import "Portada.h"
 #import "ViewController.h"
