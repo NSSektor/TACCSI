@@ -144,6 +144,7 @@
 -(void)ActualizarPintaPantalla:(id)sender;
 -(void)RevisaDatosTaccsista;
 -(IBAction)PagarPaypal:(id)sender;
+-(void)PintaAlerta;
 
 
 @end

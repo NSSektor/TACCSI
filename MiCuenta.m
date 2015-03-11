@@ -149,7 +149,7 @@ extern NSString* dispositivo;
         
         GlobalPass = [NSString stringWithFormat:@"%@", txt_pass.text];
         
-        self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"taccsi.sql"];
+        self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"taccsi_bd.sql"];
         
         NSString *query = [NSString stringWithFormat:@"delete from TABLE_USUARIOS"];
         [self.dbManager executeQuery:query];
@@ -161,6 +161,18 @@ extern NSString* dispositivo;
         NSInteger id_usuario = [GlobalID integerValue];
         
         query = [NSString stringWithFormat:@"insert into TABLE_USUARIOS values(%d, '%@', '%@' , '%@' , '%@' , '%@' , '%@')", id_usuario, Globalfoto_perfil, GlobalNombre, GlobalApaterno, GlobalAmaterno, GlobalTelefono, GlobalCorreo];
+        
+        
+        
+        NSString* FileNames = [NSString stringWithFormat:@"%@/Pass.txt", documentsDirectory];
+        NSString* DataMobilePass = [NSString stringWithFormat:@"%@", GlobalPass];
+        [DataMobilePass writeToFile:FileNames atomically:NO encoding:NSStringEncodingConversionExternalRepresentation error:nil];
+        
+        NSArray* datos_usuario = [[NSArray alloc] initWithObjects:GlobalID, Globalfoto_perfil, GlobalNombre, GlobalApaterno,GlobalAmaterno,GlobalTelefono,GlobalCorreo, nil];
+        FileName = [NSString stringWithFormat:@"%@/Usuario.txt", documentsDirectory];
+        [datos_usuario writeToFile:FileName atomically:YES];
+        
+        
         
         // Execute the query.
         [self.dbManager executeQuery:query];
@@ -233,22 +245,22 @@ extern NSString* dispositivo;
     [img_foto.layer setCornerRadius:img_foto.frame.size.width/2];
     [imageLayer setMasksToBounds:YES];
     
-    self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"taccsi.sql"];
+    self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"taccsi_bd.sql"];
     //SELECT ID FROM TABLE_USUARIOS  LIMIT 1
     NSString *query = [NSString stringWithFormat:@"select * from TABLE_USUARIOS LIMIT 1"];
     NSArray* datos_usuario = [[NSArray alloc] initWithArray:[self.dbManager loadDataFromDB:query]];
+    NSString* FileName_usuario = [NSString stringWithFormat:@"%@/Usuario.txt", documentsDirectory];
+    datos_usuario = [[NSArray alloc] initWithContentsOfFile:FileName_usuario];
     if ([datos_usuario count]>0) {
-        NSArray* datos_usuario_ = [[NSArray alloc]init];
-        datos_usuario_ = [datos_usuario objectAtIndex:0];
-        if ([datos_usuario_ count]>6) {
-            GlobalUsu = [datos_usuario_ objectAtIndex:6];
-            GlobalCorreo = [datos_usuario_ objectAtIndex:6];
-            Globalfoto_perfil = [datos_usuario_ objectAtIndex:1];
-            GlobalID = [datos_usuario_ objectAtIndex:0];
-            GlobalNombre = [datos_usuario_ objectAtIndex:2];
-            GlobalApaterno = [datos_usuario_ objectAtIndex:3];
-            GlobalAmaterno = [datos_usuario_ objectAtIndex:4];
-            GlobalTelefono = [datos_usuario_ objectAtIndex:5];
+        if ([datos_usuario count]>6) {
+            GlobalUsu = [datos_usuario objectAtIndex:6];
+            GlobalCorreo = [datos_usuario objectAtIndex:6];
+            Globalfoto_perfil = [datos_usuario objectAtIndex:1];
+            GlobalID = [datos_usuario objectAtIndex:0];
+            GlobalNombre = [datos_usuario objectAtIndex:2];
+            GlobalApaterno = [datos_usuario objectAtIndex:3];
+            GlobalAmaterno = [datos_usuario objectAtIndex:4];
+            GlobalTelefono = [datos_usuario objectAtIndex:5];
             
             txt_nombre.text = GlobalNombre;
             txt_apaterno.text = GlobalApaterno;

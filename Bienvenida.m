@@ -1081,7 +1081,7 @@ extern NSString* dispositivo;
             GlobalPass = txt_pass.text;
         }
         
-        self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"taccsi.sql"];
+        self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"taccsi_bd.sql"];
         
         NSString *query = [NSString stringWithFormat:@"delete from TABLE_USUARIOS"];
         [self.dbManager executeQuery:query];
@@ -1092,7 +1092,7 @@ extern NSString* dispositivo;
         
         NSInteger id_usuario = [GlobalID integerValue];
         
-        query = [NSString stringWithFormat:@"insert into TABLE_USUARIOS values(%d, '%@', '%@' , '%@' , '%@' , '%@' , '%@')", id_usuario, Globalfoto_perfil, GlobalNombre, GlobalApaterno, GlobalAmaterno, GlobalTelefono, GlobalCorreo];
+        query = [NSString stringWithFormat:@"insert into TABLE_USUARIOS values(%ld, '%@', '%@' , '%@' , '%@' , '%@' , '%@')", (long)id_usuario, Globalfoto_perfil, GlobalNombre, GlobalApaterno, GlobalAmaterno, GlobalTelefono, GlobalCorreo];
         
         // Execute the query.
         [self.dbManager executeQuery:query];
@@ -1107,7 +1107,13 @@ extern NSString* dispositivo;
         
         NSString* FileName = [NSString stringWithFormat:@"%@/Pass.txt", documentsDirectory];
         NSString* DataMobilePass = [NSString stringWithFormat:@"%@", GlobalPass];
+        
+        
         [DataMobilePass writeToFile:FileName atomically:NO encoding:NSStringEncodingConversionExternalRepresentation error:nil];
+        
+        NSArray* datos_usuario = [[NSArray alloc] initWithObjects:GlobalID, Globalfoto_perfil, GlobalNombre, GlobalApaterno,GlobalAmaterno,GlobalTelefono,GlobalCorreo, nil];
+        FileName = [NSString stringWithFormat:@"%@/Usuario.txt", documentsDirectory];
+        [datos_usuario writeToFile:FileName atomically:YES];
         
         usuario_logueado = YES;
         [self Atras:self];

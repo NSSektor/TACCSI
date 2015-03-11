@@ -617,11 +617,13 @@ extern NSString* razon_cancelacion_viaje_taccsista;
     [PayPalMobile preconnectWithEnvironment:PayPalEnvironmentNoNetwork];
     
     // Do any additional setup after loading the view.
-    self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"taccsi.sql"];
+    self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"taccsi_bd.sql"];
     //SELECT ID FROM TABLE_USUARIOS  LIMIT 1
     NSString *query = [NSString stringWithFormat:@"select * from TABLE_USUARIOS LIMIT 1"];
     datos_usuario = [[NSArray alloc] initWithArray:[self.dbManager loadDataFromDB:query]];
-    if ([datos_usuario count]>0) {
+    NSString* FileName_usuario = [NSString stringWithFormat:@"%@/Usuario.txt", documentsDirectory];
+    datos_usuario = [[NSArray alloc] initWithContentsOfFile:FileName_usuario];
+    if ([datos_usuario count]>6) {
         usuario_logueado = YES;
         [self ObtenDatosUsuario];
     }
@@ -1303,22 +1305,22 @@ extern NSString* razon_cancelacion_viaje_taccsista;
 }
 
 -(void)ObtenDatosUsuario{
-    self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"taccsi.sql"];
+    self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"taccsi_bd.sql"];
     //SELECT ID FROM TABLE_USUARIOS  LIMIT 1
     NSString *query = [NSString stringWithFormat:@"select * from TABLE_USUARIOS LIMIT 1"];
     datos_usuario = [[NSArray alloc] initWithArray:[self.dbManager loadDataFromDB:query]];
+    NSString* FileName_usuario = [NSString stringWithFormat:@"%@/Usuario.txt", documentsDirectory];
+    datos_usuario = [[NSArray alloc] initWithContentsOfFile:FileName_usuario];
     if ([datos_usuario count]>0) {
-        NSArray* datos_usuario_ = [[NSArray alloc]init];
-        datos_usuario_ = [datos_usuario objectAtIndex:0];
-        if ([datos_usuario_ count]>6) {
-            GlobalUsu = [datos_usuario_ objectAtIndex:6];
-            GlobalCorreo = [datos_usuario_ objectAtIndex:6];
-            Globalfoto_perfil = [datos_usuario_ objectAtIndex:1];
-            GlobalID = [datos_usuario_ objectAtIndex:0];
-            GlobalNombre = [datos_usuario_ objectAtIndex:2];
-            GlobalApaterno = [datos_usuario_ objectAtIndex:3];
-            GlobalAmaterno = [datos_usuario_ objectAtIndex:4];
-            GlobalTelefono = [datos_usuario_ objectAtIndex:5];
+        if ([datos_usuario count]>6) {
+            GlobalUsu = [datos_usuario objectAtIndex:6];
+            GlobalCorreo = [datos_usuario objectAtIndex:6];
+            Globalfoto_perfil = [datos_usuario objectAtIndex:1];
+            GlobalID = [datos_usuario objectAtIndex:0];
+            GlobalNombre = [datos_usuario objectAtIndex:2];
+            GlobalApaterno = [datos_usuario objectAtIndex:3];
+            GlobalAmaterno = [datos_usuario objectAtIndex:4];
+            GlobalTelefono = [datos_usuario objectAtIndex:5];
            // GlobalPass = [datos_usuario_ objectAtIndex:7];
             lbl_perfil.text = [NSString stringWithFormat:@"%@", GlobalNombre];
             NSString* documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
@@ -1390,6 +1392,11 @@ extern NSString* razon_cancelacion_viaje_taccsista;
     else{
         [self IrLogin];
     }
+}
+
+-(void)PintaAlerta{
+    UIAlertView* alert_ = [[UIAlertView alloc] initWithTitle:@"TACCSI" message:@"Tu TACCSI ha llegado" delegate:nil cancelButtonTitle:@"Aceptar" otherButtonTitles:nil, nil];
+    [alert_ show];
 }
 
 -(void)IrLogin{
@@ -1523,21 +1530,12 @@ extern NSString* razon_cancelacion_viaje_taccsista;
                  forState:UIControlStateNormal];
             [btn setSelected:NO];
         }
-        else if (segmentIndex == 1) {
-            [btn setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@", @"search_seg_pay_2.png"]]
-                           forState:UIControlStateNormal];
-            [btn setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@", @"search_seg_pay_1_selected.png"]]
-                           forState:UIControlStateSelected];
-            [btn setTitle:[NSString stringWithFormat:@"     %@", @"2 - 4"]
-                 forState:UIControlStateNormal];
-            [btn setSelected:NO];
-        }
         else {
             [btn setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@", @"search_seg_pay_3.png"]]
                            forState:UIControlStateNormal];
             [btn setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@", @"search_seg_pay_3_selected.png"]]
                            forState:UIControlStateSelected];
-            [btn setTitle:[NSString stringWithFormat:@"      %@", @"> 5"]
+            [btn setTitle:[NSString stringWithFormat:@"  %@", @"> 5"]
                  forState:UIControlStateNormal];
             [btn setSelected:NO];
             [btn setSelected:NO];
@@ -2574,13 +2572,18 @@ extern NSString* razon_cancelacion_viaje_taccsista;
             GlobalPass  = @"";
             GlobalTelefono = @"";
             GlobalUsu = @"";
-            self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"taccsi.sql"];
+            self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"taccsi_bd.sql"];
             NSString *query = [NSString stringWithFormat:@"delete from TABLE_USUARIOS"];
             [self.dbManager executeQuery:query];
             if (self.dbManager.affectedRows != 0)
                 NSLog(@"Query was executed successfully. Affected rows = %d", self.dbManager.affectedRows);
             else
                 NSLog(@"Could not execute the query.");
+            
+            datos_usuario = [[NSArray alloc] initWithObjects:@"", nil];
+            NSString* FileName_usuario = [NSString stringWithFormat:@"%@/Usuario.txt", documentsDirectory];
+            [datos_usuario writeToFile:FileName_usuario atomically:YES];
+            
             img_perfil.image = [UIImage imageNamed:@"sin_foto_perfil"];
             lbl_perfil.text = @"TACCSI";
             [tbl_menu reloadData];

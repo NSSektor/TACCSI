@@ -286,7 +286,7 @@ extern NSMutableArray* MAservicios_taccsistas;
         
         GlobalPass = [NSString stringWithFormat:@"%@", txt_pass.text];
         
-        self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"taccsi.sql"];
+        self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"taccsi_bd.sql"];
         
         NSString *query = [NSString stringWithFormat:@"delete from TABLE_USUARIOS"];
         [self.dbManager executeQuery:query];

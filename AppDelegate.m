@@ -19,6 +19,7 @@
 
 #import "Bienvenida.h"
 
+
 NSString* dispositivo;
 NSMutableArray* MAtaccsistas;
 NSMutableArray* MAid_taccsistas;
@@ -189,7 +190,6 @@ NSString* razon_cancelacion_viaje_taccsista;
 -(void)ActualizaEstatusViaje:(NSDictionary*)UserInfo{
     
     if ([UserInfo objectForKey:@"aps"]) {
-        
         ViewController* portada = [[ViewController alloc] init];
         NSArray* datos_viaje = [portada DameInfoVIaje];
         if ([datos_viaje count]>0) {
@@ -229,6 +229,11 @@ NSString* razon_cancelacion_viaje_taccsista;
                             razon_cancelacion_viaje_taccsista = [array_ objectAtIndex:2];
                             [portada EscribeArchivo_id_estatus_viaje:@"-1" id_viaje:[datos_viaje objectAtIndex:1] lat_origen:[datos_viaje objectAtIndex:2] lon_origen:[datos_viaje objectAtIndex:3] lat_destino:[datos_viaje objectAtIndex:4] lon_destino:[datos_viaje objectAtIndex:5] id_taccsista:[datos_viaje objectAtIndex:6] clave_confirmacion:[datos_viaje objectAtIndex:7] foto_taccsista:[datos_viaje objectAtIndex:8] nombre_taccsista:[datos_viaje objectAtIndex:9] apaterno_taccsista:[datos_viaje objectAtIndex:10] amaterno_taccsista:[datos_viaje objectAtIndex:11] telefono:[datos_viaje objectAtIndex:12] marca:[datos_viaje objectAtIndex:13] modelo:[datos_viaje objectAtIndex:14] placas:[datos_viaje objectAtIndex:15] eco:[datos_viaje objectAtIndex:16] foto_taccsi:[datos_viaje objectAtIndex:17] direccion_origen:[datos_viaje objectAtIndex:18] forma_pago:[datos_viaje objectAtIndex:19] importe:[datos_viaje objectAtIndex:20] direccion_destino:[datos_viaje objectAtIndex:21] pasajeros:[datos_viaje objectAtIndex:22]];
                             PushLLego = YES;
+                        }
+                    }
+                    if ([array_ count] ==1) {
+                        if ([[array_ objectAtIndex:0] isEqualToString:@"Tu TACCSI ha llegado"]) {
+                            [portada PintaAlerta];
                         }
                     }
                 }

@@ -7,15 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MYIntroductionView.h"
+#import "GHWalkThroughView.h"
 
-@interface ComoFunciona : UIViewController<MYIntroductionDelegate>{
+@interface ComoFunciona : UIViewController<GHWalkThroughViewDataSource>{
     UIImageView* navbar;
     UILabel*          lbl_navbar;
     UIButton*        btn_home_navbar;
-    UIView*           contenedor_ayuda;
+    UIImageView* fondo_pantalla;
+    UIImageView* img_descripcion;
+    UIPageControl* pg_control;
 }
 
 -(IBAction)Atras:(id)sender;
+
+@property (nonatomic, strong) GHWalkThroughView* ghView ;
+
 
 @end

@@ -157,7 +157,7 @@ extern NSString* dispositivo;
     nombre_imagen_taccsista = @"";
     // Do any additional setup after loading the view from its nib.
     descarga_imagen_usuario = NO;
-    self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"taccsi.sql"];
+    self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"taccsi_bd.sql"];
     //SELECT ID FROM TABLE_USUARIOS  LIMIT 1
     NSString *query = [NSString stringWithFormat:@"select * from TABLE_USUARIOS LIMIT 1"];
     datos_usuario = [[NSArray alloc] initWithArray:[self.dbManager loadDataFromDB:query]];
@@ -871,7 +871,7 @@ extern NSString* dispositivo;
 
 
 -(void)ObtenDatosUsuario{
-    self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"taccsi.sql"];
+    self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"taccsi_bd.sql"];
     //SELECT ID FROM TABLE_USUARIOS  LIMIT 1
     NSString *query = [NSString stringWithFormat:@"select * from TABLE_USUARIOS LIMIT 1"];
     datos_usuario = [[NSArray alloc] initWithArray:[self.dbManager loadDataFromDB:query]];
@@ -2159,7 +2159,7 @@ extern NSString* dispositivo;
             GlobalPass  = @"";
             GlobalTelefono = @"";
             GlobalUsu = @"";
-            self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"taccsi.sql"];
+            self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"taccsi_bd.sql"];
             NSString *query = [NSString stringWithFormat:@"delete from TABLE_USUARIOS"];
             [self.dbManager executeQuery:query];
             if (self.dbManager.affectedRows != 0)
