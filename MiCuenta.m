@@ -7,8 +7,6 @@
 //
 
 #import "MiCuenta.h"
-//#import "MisLugares.h"
-#import "Portada.h"
 #import "Reachability.h"
 
 extern NSString* documentsDirectory;
@@ -148,22 +146,6 @@ extern NSString* dispositivo;
     else{
         
         GlobalPass = [NSString stringWithFormat:@"%@", txt_pass.text];
-        
-        self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"taccsi_bd.sql"];
-        
-        NSString *query = [NSString stringWithFormat:@"delete from TABLE_USUARIOS"];
-        [self.dbManager executeQuery:query];
-        if (self.dbManager.affectedRows != 0)
-            NSLog(@"Query was executed successfully. Affected rows = %d", self.dbManager.affectedRows);
-        else
-            NSLog(@"Could not execute the query.");
-        
-        NSInteger id_usuario = [GlobalID integerValue];
-        
-        query = [NSString stringWithFormat:@"insert into TABLE_USUARIOS values(%d, '%@', '%@' , '%@' , '%@' , '%@' , '%@')", id_usuario, Globalfoto_perfil, GlobalNombre, GlobalApaterno, GlobalAmaterno, GlobalTelefono, GlobalCorreo];
-        
-        
-        
         NSString* FileNames = [NSString stringWithFormat:@"%@/Pass.txt", documentsDirectory];
         NSString* DataMobilePass = [NSString stringWithFormat:@"%@", GlobalPass];
         [DataMobilePass writeToFile:FileNames atomically:NO encoding:NSStringEncodingConversionExternalRepresentation error:nil];
@@ -171,23 +153,6 @@ extern NSString* dispositivo;
         NSArray* datos_usuario = [[NSArray alloc] initWithObjects:GlobalID, Globalfoto_perfil, GlobalNombre, GlobalApaterno,GlobalAmaterno,GlobalTelefono,GlobalCorreo, nil];
         FileName = [NSString stringWithFormat:@"%@/Usuario.txt", documentsDirectory];
         [datos_usuario writeToFile:FileName atomically:YES];
-        
-        
-        
-        // Execute the query.
-        [self.dbManager executeQuery:query];
-        
-        // If the query was successfully executed then pop the view controller.
-        if (self.dbManager.affectedRows != 0) {
-            NSLog(@"Query was executed successfully. Affected rows = %d", self.dbManager.affectedRows);
-            NSString* FileNames = [NSString stringWithFormat:@"%@/Pass.txt", documentsDirectory];
-            NSString* DataMobilePass = [NSString stringWithFormat:@"%@", GlobalPass];
-            [DataMobilePass writeToFile:FileNames atomically:NO encoding:NSStringEncodingConversionExternalRepresentation error:nil];
-        }
-        else{
-            NSLog(@"Could not execute the query.");
-        }
-        
         [self Cancelar:self];
     }
 }
@@ -244,13 +209,9 @@ extern NSString* dispositivo;
     [imageLayer setMasksToBounds:YES];
     [img_foto.layer setCornerRadius:img_foto.frame.size.width/2];
     [imageLayer setMasksToBounds:YES];
-    
-    self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"taccsi_bd.sql"];
-    //SELECT ID FROM TABLE_USUARIOS  LIMIT 1
-    NSString *query = [NSString stringWithFormat:@"select * from TABLE_USUARIOS LIMIT 1"];
-    NSArray* datos_usuario = [[NSArray alloc] initWithArray:[self.dbManager loadDataFromDB:query]];
+
     NSString* FileName_usuario = [NSString stringWithFormat:@"%@/Usuario.txt", documentsDirectory];
-    datos_usuario = [[NSArray alloc] initWithContentsOfFile:FileName_usuario];
+     NSArray* datos_usuario = [[NSArray alloc] initWithContentsOfFile:FileName_usuario];
     if ([datos_usuario count]>0) {
         if ([datos_usuario count]>6) {
             GlobalUsu = [datos_usuario objectAtIndex:6];

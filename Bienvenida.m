@@ -1081,29 +1081,6 @@ extern NSString* dispositivo;
             GlobalPass = txt_pass.text;
         }
         
-        self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"taccsi_bd.sql"];
-        
-        NSString *query = [NSString stringWithFormat:@"delete from TABLE_USUARIOS"];
-        [self.dbManager executeQuery:query];
-        if (self.dbManager.affectedRows != 0)
-            NSLog(@"Query was executed successfully. Affected rows = %d", self.dbManager.affectedRows);
-        else
-            NSLog(@"Could not execute the query.");
-        
-        NSInteger id_usuario = [GlobalID integerValue];
-        
-        query = [NSString stringWithFormat:@"insert into TABLE_USUARIOS values(%ld, '%@', '%@' , '%@' , '%@' , '%@' , '%@')", (long)id_usuario, Globalfoto_perfil, GlobalNombre, GlobalApaterno, GlobalAmaterno, GlobalTelefono, GlobalCorreo];
-        
-        // Execute the query.
-        [self.dbManager executeQuery:query];
-        
-        // If the query was successfully executed then pop the view controller.
-        if (self.dbManager.affectedRows != 0) {
-            NSLog(@"Query was executed successfully. Affected rows = %d", self.dbManager.affectedRows);
-        }
-        else{
-            NSLog(@"Could not execute the query.");
-        }
         
         NSString* FileName = [NSString stringWithFormat:@"%@/Pass.txt", documentsDirectory];
         NSString* DataMobilePass = [NSString stringWithFormat:@"%@", GlobalPass];

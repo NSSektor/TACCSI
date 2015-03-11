@@ -10,7 +10,6 @@
 #import <GoogleMaps/GoogleMaps.h>
 #import "SYSoapTool.h"
 #import "CustomSegmentedControl.h"
-#import "DBManager.h"
 #import "PayPalMobile.h"
 
 @interface ViewController : UIViewController<CLLocationManagerDelegate,UITableViewDataSource, UITableViewDelegate,NSXMLParserDelegate,SOAPToolDelegate,GMSMapViewDelegate, UITextFieldDelegate,CustomSegmentedControlDelegate,UIAlertViewDelegate,PayPalPaymentDelegate, UIPickerViewDelegate, UIPickerViewDataSource>{
@@ -108,7 +107,6 @@
 
 }
 
-@property (nonatomic, strong) DBManager *dbManager;
 @property (nonatomic, strong, readwrite) PayPalConfiguration *payPalConfiguration;
 
 -(void)FillArray;

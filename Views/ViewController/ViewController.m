@@ -10,7 +10,6 @@
 #import "Reachability.h"
 #import "SimpleTableCell.h"
 #import "BuscarDestino.h"
-#import "Login.h"
 #import <QuartzCore/QuartzCore.h>
 #import "Bienvenida.h"
 #import "MisLugares.h"
@@ -615,12 +614,7 @@ extern NSString* razon_cancelacion_viaje_taccsista;
     // associated with the user's PayPal account, then add:
     _payPalConfiguration.payPalShippingAddressOption = PayPalShippingAddressOptionPayPal;
     [PayPalMobile preconnectWithEnvironment:PayPalEnvironmentNoNetwork];
-    
-    // Do any additional setup after loading the view.
-    self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"taccsi_bd.sql"];
-    //SELECT ID FROM TABLE_USUARIOS  LIMIT 1
-    NSString *query = [NSString stringWithFormat:@"select * from TABLE_USUARIOS LIMIT 1"];
-    datos_usuario = [[NSArray alloc] initWithArray:[self.dbManager loadDataFromDB:query]];
+  
     NSString* FileName_usuario = [NSString stringWithFormat:@"%@/Usuario.txt", documentsDirectory];
     datos_usuario = [[NSArray alloc] initWithContentsOfFile:FileName_usuario];
     if ([datos_usuario count]>6) {
@@ -1305,10 +1299,6 @@ extern NSString* razon_cancelacion_viaje_taccsista;
 }
 
 -(void)ObtenDatosUsuario{
-    self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"taccsi_bd.sql"];
-    //SELECT ID FROM TABLE_USUARIOS  LIMIT 1
-    NSString *query = [NSString stringWithFormat:@"select * from TABLE_USUARIOS LIMIT 1"];
-    datos_usuario = [[NSArray alloc] initWithArray:[self.dbManager loadDataFromDB:query]];
     NSString* FileName_usuario = [NSString stringWithFormat:@"%@/Usuario.txt", documentsDirectory];
     datos_usuario = [[NSArray alloc] initWithContentsOfFile:FileName_usuario];
     if ([datos_usuario count]>0) {
@@ -2572,13 +2562,7 @@ extern NSString* razon_cancelacion_viaje_taccsista;
             GlobalPass  = @"";
             GlobalTelefono = @"";
             GlobalUsu = @"";
-            self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"taccsi_bd.sql"];
-            NSString *query = [NSString stringWithFormat:@"delete from TABLE_USUARIOS"];
-            [self.dbManager executeQuery:query];
-            if (self.dbManager.affectedRows != 0)
-                NSLog(@"Query was executed successfully. Affected rows = %d", self.dbManager.affectedRows);
-            else
-                NSLog(@"Could not execute the query.");
+         
             
             datos_usuario = [[NSArray alloc] initWithObjects:@"", nil];
             NSString* FileName_usuario = [NSString stringWithFormat:@"%@/Usuario.txt", documentsDirectory];

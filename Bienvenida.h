@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "SYSoapTool.h"
-#import "DBManager.h"
 
 @interface Bienvenida : UIViewController<SOAPToolDelegate, NSXMLParserDelegate, UITextFieldDelegate>{
     
@@ -67,7 +66,6 @@
     NSString *StringMsg;
 }
 
-@property (nonatomic, strong) DBManager *dbManager;
 
 -(IBAction)actualizarimagen:(id)sender;
 

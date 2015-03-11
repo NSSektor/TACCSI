@@ -12,11 +12,7 @@
 
 #import "PayPalMobile.h"
 
-
-#import "Portada.h"
 #import "ViewController.h"
-#import "Login.h"
-
 #import "Bienvenida.h"
 
 

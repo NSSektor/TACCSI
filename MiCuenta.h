@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "SYSoapTool.h"
 #import <MobileCoreServices/MobileCoreServices.h>
-#import "DBManager.h"
 
 @interface MiCuenta : UIViewController<UITextFieldDelegate, UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate, SOAPToolDelegate, NSXMLParserDelegate>{
     
@@ -56,7 +55,6 @@
 -(NSUInteger)getLength:(NSString*)mobileNumber;
 - (BOOL)validateEmail:(NSString *)emailStr;
 - (IBAction)foto:(id)sender;
-@property (nonatomic, strong) DBManager *dbManager;
 -(void)FillArray;
 -(void)Animacion:(int)Code;
 

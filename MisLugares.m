@@ -7,7 +7,6 @@
 //
 
 #import "MisLugares.h"
-#import "Portada.h"
 #import "Reachability.h"
 #import "MiCuenta.h"
 
